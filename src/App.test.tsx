@@ -1,9 +1,88 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import { renderWithRouter } from './testing-utils'
+import App from './App'
+import { store } from './store/store'
+import { Provider } from 'react-redux'
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+import userEvent from '@testing-library/user-event'
+
+beforeEach(() => {
+  renderWithRouter(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  )
+})
+
+test('renders App component (smoke test)', () => {})
+
+describe('App integration tests - navigating', () => {
+  it('renders home page initially', () => {
+    const currentMeetupsTitle = screen.getByText(/Current Meetups/i)
+    expect(currentMeetupsTitle).toBeInTheDocument()
+  })
+  it('renders meetup detail page when card is clicked', async () => {
+    const cards = await screen.findAllByTestId('currentListItem')
+    const card1 = cards[0]
+    userEvent.click(card1)
+
+    const meetupPage = await screen.findByTestId('meetup-detail-page')
+    expect(meetupPage).toBeInTheDocument()
+  })
+})
+
+describe('App integration test - login and logout flows', () => {
+  it('renders log in page when login button in header is clicked', async () => {
+    const loginBtn = screen.getByRole('button', { name: /login/i })
+    userEvent.click(loginBtn)
+    const loginPage = await screen.findByRole('heading', { name: 'Log in' })
+    expect(loginPage).toBeInTheDocument()
+  })
+  it("doesn't render login button in header when route is /login", () => {
+    const loginBtn = screen.getByRole('button', { name: /login/i })
+    userEvent.click(loginBtn)
+
+    const sameLoginButton = screen.queryByRole('button', { name: /login/i })
+    expect(sameLoginButton).not.toBeInTheDocument()
+  })
+  it('redirects to previous page if user credentials are correct when logging in', () => {
+    const loginBtn = screen.getByRole('button', { name: /login/i })
+
+    userEvent.click(loginBtn)
+
+    const emailInput = screen.getByLabelText(/email/i)
+    const passwordInput = screen.getByLabelText(/password/i)
+    const submitBtn = screen.getByTestId('login-btn')
+
+    userEvent.type(emailInput, 'azeb@email.com')
+    userEvent.type(passwordInput, 'Azeb')
+    userEvent.click(submitBtn)
+
+    const title = screen.getByRole('heading', { name: 'Current meetups' })
+    expect(title).toBeInTheDocument()
+
+    const logoutBtn = screen.getByRole('button', { name: /log out/i })
+    userEvent.click(logoutBtn)
+  })
+  it("renders the user's name in the header when logged in", () => {
+    const loginBtn = screen.getByRole('button', { name: /login/i })
+
+    userEvent.click(loginBtn)
+
+    const emailInput = screen.getByLabelText(/email/i)
+    const passwordInput = screen.getByLabelText(/password/i)
+    const submitBtn = screen.getByTestId('login-btn')
+
+    userEvent.type(emailInput, 'azeb@email.com')
+    userEvent.type(passwordInput, 'Azeb')
+    userEvent.click(submitBtn)
+
+    const username = screen.getByText('Azeb')
+    expect(username).toBeInTheDocument()
+
+    const logoutBtn = screen.getByRole('button', { name: /log out/i })
+    userEvent.click(logoutBtn)
+  })
+  
+})
