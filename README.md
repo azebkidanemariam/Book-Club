@@ -1,3 +1,19 @@
+# User stories
+
+# All Users
+As a user i want to be able to browse comments on events because i want to know what other people thinks
+As a user i want to be able to search for events because i want to find an event fast
+As a user i want to be able to sort events after date because i want to see new events first
+# Unauthorize User
+As an unauthorized user i want to see meetupdetails and who host and attendees of the event 
+
+# Authorized User
+As an authorized user i want to add events because i want to connect with people of the same interests
+As an authorized user i want to be able to attend events because i find them interesting
+
+# Attending Event User
+As an attending event user i want to be able to comment on the event because i might need additional information
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
