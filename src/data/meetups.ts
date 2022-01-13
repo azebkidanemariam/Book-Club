@@ -1,4 +1,4 @@
-import { IComment } from '../models/comment'
+import { IComment } from '../models/Comment'
 import { IMeetup } from '../models/meetup'
 
 const meetups: IMeetup[] = [

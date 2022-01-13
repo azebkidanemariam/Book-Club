@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { IMeetup } from "../../models/meetup";
-import { IComment } from "../../models/comment";
+import { IComment } from "../../models/Comment";
 import {
   getMeetupById,
   updateMeetupAttendeeList,

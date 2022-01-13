@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
-import userReducer from './usersSlice'
+import userReducer from './/usersSlice'
 import meetupReducer from './meetupsSlice'
 
 // ...

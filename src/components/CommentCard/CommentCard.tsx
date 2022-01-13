@@ -1,5 +1,5 @@
 import React from 'react'
-import { IComment } from '../../models/comment'
+import { IComment } from '../../models/Comment'
 
 import classes from './CommentCard.module.css'
 

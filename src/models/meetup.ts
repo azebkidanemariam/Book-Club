@@ -1,4 +1,4 @@
-import { IComment } from './comment'
+import { IComment } from './Comment'
 
 export interface IMeetup {
   id: number
