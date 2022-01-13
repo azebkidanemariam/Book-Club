@@ -54,7 +54,7 @@ describe('App integration tests - registering for events', () => {
     const logoutBtn = screen.getByRole('button', { name: /log out/i })
     userEvent.click(logoutBtn)
   })
-  it("doesn't render an attend button if the event has already past", () => {
+  it("attend button do not appear on previous events", () => {
     // Login
     const loginBtn = screen.getByRole('button', { name: /login/i })
 

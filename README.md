@@ -8,7 +8,6 @@ As a user i want to be able to sort events after date because i want to see new 
 As an unauthorized user i want to see meetupdetails and who host and attendees of the event 
 
 # Authorized User
-As an authorized user i want to add events because i want to connect with people of the same interests
 As an authorized user i want to be able to attend events because i find them interesting
 
 # Attending Event User

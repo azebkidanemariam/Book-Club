@@ -14,8 +14,8 @@ beforeEach(() => {
 })
 
 describe('Login unit tests', () => {
-  it('renders login component correctly (smoke test', () => {})
-  it('renders an empty email input field initially', () => {
+  it('show login component precisely (smoke test', () => {})
+  it('display an empty email input field', () => {
     const emailInput = screen.getByLabelText(/email/i)
     expect(emailInput).toBeInTheDocument()
     expect(emailInput.textContent).toBe('')
@@ -25,7 +25,7 @@ describe('Login unit tests', () => {
     expect(passwordInput).toBeInTheDocument()
     expect(passwordInput.textContent).toBe('')
   })
-  it('renders a log in button', () => {
+  it('display a login button', () => {
     const loginBtn = screen.getByTestId('login-btn')
     expect(loginBtn).toBeInTheDocument()
   })
@@ -49,7 +49,7 @@ describe('Login unit tests', () => {
       password: 'Azeb',
     })
   })
-  it('displays an error if user email is wrong', () => {
+  it('show  error if the client email is wrong', () => {
     const emailInput = screen.getByLabelText(/email/i)
     const passwordInput = screen.getByLabelText(/password/i)
     const submitBtn = screen.getByTestId('login-btn')
@@ -61,7 +61,7 @@ describe('Login unit tests', () => {
     const error = screen.getByText('Invalid user credentials')
     expect(error).toBeInTheDocument()
   })
-  it('displays an error if user password is wrong', () => {
+  it('show  error if the client password is wrong', () => {
     const emailInput = screen.getByLabelText(/email/i)
     const passwordInput = screen.getByLabelText(/password/i)
     const submitBtn = screen.getByTestId('login-btn')

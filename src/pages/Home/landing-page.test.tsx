@@ -19,41 +19,27 @@ beforeEach(() => {
 
 describe('Home unit tests - meetup lists', () => {
   it('renders Home component correctly (smoketest)', () => {})
-  it('renders a list of 3 coming meetups', async () => {
+  it('renders a list of 3 upcoming events', async () => {
     const meetups = await screen.findAllByTestId('currentListItem')
     expect(meetups).toHaveLength(3)
   })
-  it('renders a list in chronological order', async () => {
+  it('renders a list of events in chronological order', async () => {
     const meetups = await screen.findAllByTestId('currentListItem')
     expect(meetups[0]).toContainHTML('<p><strong>Start: </strong>Sat Dec 17 2022 13:00</p>')
     expect(meetups[1]).toContainHTML('<p><strong>Start: </strong>Tue Dec 27 2022 13:00</p>')
     expect(meetups[2]).toContainHTML('<p><strong>Start: </strong>Sat Jan 07 2023 19:30</p>')
   })
-  it('renders a list of 2 past meetups', async () => {
+  it('renders all previous events', async () => {
     const meetups = await screen.findAllByTestId('pastListItem')
     expect(meetups).toHaveLength(2)
   })
-  it('renders a list of past meetups in reverse chronological order', async () => {
+  it('renders all previous events in reverse chronological order', async () => {
     const meetups = await screen.findAllByTestId('pastListItem')
     expect(meetups[0]).toContainHTML('<p><strong>Start: </strong>Wed Dec 08 2021 19:30</p>')
     expect(meetups[1]).toContainHTML('<p><strong>Start: </strong>Tue Dec 07 2021 19:00</p>')
   })
-  // it('renders different css styling for past events', () => {
-  //   const wrapper = mount(
-  //     <Provider store={store}>
-  //       <MemoryRouter>
-  //         <Routes>
-  //           <Route path="/" element={<Home />} />
-  //         </Routes>
-  //       </MemoryRouter>
-  //     </Provider>
-  //   )
-
-  //   const pastItems = wrapper.find('.cardWrapperPast')
-
-  //   expect(pastItems.length).toBe(2)
-  // })
-  it('renders the text PAST on past meetup cards', () => {
+  
+  it('renders the text PAST on previous event cards', () => {
     const pastText = screen.getAllByText('- PAST')
 
     expect(pastText).toHaveLength(2)
@@ -61,7 +47,7 @@ describe('Home unit tests - meetup lists', () => {
 })
 
 describe('Home unit tests - search', () => {
-  it('renders one past meetup when searching for backend', () => {
+  it('display one previous event when searching for David and goliath', () => {
     const searchBox = screen.getByRole('searchbox')
     const filteredMeetups = screen.getAllByTestId('pastListItem')
 
@@ -73,13 +59,13 @@ describe('Home unit tests - search', () => {
 
     expect(newFilteredMeetups).toHaveLength(1)
   })
-  it('renders no past meetups found message when searching for frontend', () => {
+  it('display no previous event found message when searching for wellness', () => {
     const searchBox = screen.getByRole('searchbox')
     const filteredMeetups = screen.getAllByTestId('pastListItem')
 
     expect(filteredMeetups).toHaveLength(2)
 
-    userEvent.type(searchBox, 'frontend')
+    userEvent.type(searchBox, 'wellness')
 
     const newFilteredMeetups = screen.queryAllByTestId('pastListItem')
     const message = screen.getByText(/no past meetups found/i)
@@ -91,11 +77,11 @@ describe('Home unit tests - search', () => {
     const searchBox = screen.getByLabelText(/search/i)
     expect(searchBox).toBeInTheDocument()
   })
-  it('renders an empty search input field initially', () => {
+  it('display  empty search input field ', () => {
     const searchBox = screen.getByRole('searchbox')
     expect(searchBox.textContent).toBe('')
   })
-  it('renders one meetup when searching for frontend', () => {
+  it('renders one event when searching for I know why', () => {
     const searchBox = screen.getByRole('searchbox')
     const filteredMeetups = screen.getAllByTestId('currentListItem')
 
@@ -107,7 +93,7 @@ describe('Home unit tests - search', () => {
 
     expect(newFilteredMeetups).toHaveLength(1)
   })
-  it('search is case insensitive', () => {
+  it('search filter is case insensitive', () => {
     const searchBox = screen.getByRole('searchbox')
     const filteredProducts = screen.getAllByTestId('currentListItem')
 
@@ -119,7 +105,7 @@ describe('Home unit tests - search', () => {
 
     expect(newFilteredProducts).toHaveLength(1)
   })
-  it('renders a no matches found message if search doesnt have any matches', () => {
+  it('display matches not found text if search doesnt have any matches', () => {
     const searchBox = screen.getByRole('searchbox')
     const filteredMeetups = screen.getAllByTestId('currentListItem')
 
@@ -133,7 +119,7 @@ describe('Home unit tests - search', () => {
     expect(newFilteredMeetups).toHaveLength(0)
     expect(message).toBeInTheDocument()
   })
-  it('shows the current search string as a button when the string is not empty', () => {
+  it('display current search text as a reccomendation when the text input is not empty', () => {
     const searchBox = screen.getByRole('searchbox')
 
     const invisibleSearchString = screen.queryByRole('button', { name: '' })
@@ -165,7 +151,7 @@ describe('Home unit tests - search', () => {
 })
 
 describe('Home unit tests - date picker', () => {
-  it('renders a date input on the screen', () => {
+  it('display date on the screen', () => {
     const dateInput = screen.getByLabelText(/date/i)
 
     expect(dateInput).toBeInTheDocument()
@@ -179,7 +165,7 @@ describe('Home unit tests - date picker', () => {
 
     expect(dateString).toBeInTheDocument()
   })
-  it('shows the Javascript meetup for a date filter 2022-12-17', async () => {
+  it('display Educated event for a date filter 2022-12-17', async () => {
     const dateInput = screen.getByLabelText(/date/i)
 
     userEvent.type(dateInput, '2022-12-17')
@@ -187,7 +173,7 @@ describe('Home unit tests - date picker', () => {
     const currentMeetups = await screen.findAllByTestId('currentListItem')
     expect(currentMeetups).toHaveLength(1)
   })
-  it('shows a no matches found in past meetups for date filter 2022-12-17', async () => {
+  it('display no previous event for date filter 2022-12-17', async () => {
     const dateInput = screen.getByLabelText(/date/i)
 
     userEvent.type(dateInput, '2022-12-17')
@@ -196,7 +182,7 @@ describe('Home unit tests - date picker', () => {
 
     expect(message).toBeInTheDocument()
   })
-  it('shows the swimming past meetup for a date filter 2021-12-07', async () => {
+  it('diplay thinking fast and slow as previous event for a date filter 2021-12-07', async () => {
     const dateInput = screen.getByLabelText(/date/i)
 
     userEvent.type(dateInput, '2021-12-07')
@@ -204,7 +190,7 @@ describe('Home unit tests - date picker', () => {
     const pastMeetups = await screen.findAllByTestId('pastListItem')
     expect(pastMeetups).toHaveLength(1)
   })
-  it('shows a no matches found in current meetups for date filter 2021-12-07', async () => {
+  it('display no current event for date filter 2021-12-07', async () => {
     const dateInput = screen.getByLabelText(/date/i)
 
     userEvent.type(dateInput, '2021-12-07')
@@ -213,7 +199,7 @@ describe('Home unit tests - date picker', () => {
 
     expect(message).toBeInTheDocument()
   })
-  it('removes the date filter when date filter button is clicked', async () => {
+  it('clear the date after date button filter clicked', async () => {
     const dateInput = screen.getByLabelText(/date/i)
 
     userEvent.type(dateInput, '2022-12-17')
@@ -228,7 +214,7 @@ describe('Home unit tests - date picker', () => {
     const unfilteredCurrentMeetups = await screen.findAllByTestId('currentListItem')
     expect(unfilteredCurrentMeetups).toHaveLength(3)
   })
-  it('removes all search and date filters when clicking remove all button', () => {
+  it('clear search and date filters by clicking remove all button', () => {
     const dateInput = screen.getByLabelText(/date/i)
     const searchBox = screen.getByRole('searchbox')
 
@@ -247,22 +233,22 @@ describe('Home unit tests - date picker', () => {
 })
 
 describe('Home integration with card', () => {
-  it('card displays title', () => {
+  it('event card render  title', () => {
     const meetupCards = screen.getAllByTestId('currentListItem')
     const meetup1 = meetupCards[0]
     expect(meetup1).toHaveTextContent('Educated')
   })
-  it('card displays start', () => {
+  it('event card render start', () => {
     const meetupCards = screen.getAllByTestId('currentListItem')
     const meetup1 = meetupCards[0]
     expect(meetup1).toHaveTextContent('Start: Sat Dec 17 2022 13:00')
   })
-  it('card displays end', () => {
+  it('event card render end', () => {
     const meetupCards = screen.getAllByTestId('currentListItem')
     const meetup1 = meetupCards[0]
     expect(meetup1).toHaveTextContent('End: Sat Dec 17 2022 15:00')
   })
-  it('card displays location', () => {
+  it('event card render location', () => {
     const meetupCards = screen.getAllByTestId('currentListItem')
     const meetup1 = meetupCards[0]
     expect(meetup1).toHaveTextContent('Location: 10 Main Street, London')

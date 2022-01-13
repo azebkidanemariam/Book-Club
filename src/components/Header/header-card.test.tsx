@@ -13,13 +13,13 @@ beforeEach(() => {
 })
 
 describe('Header', () => {
-  it('renders Header component correctly (smoketest)', () => {})
-  it('WitrenderWithRouters text MeetApp in the header', () => {
+  it('display Header properly (smoketest)', () => {})
+  it('WitrenderWithRouters text The-Book-club in the header', () => {
     const title = screen.getByText(/The-Book-Club/i)
 
     expect(title).toBeInTheDocument()
   })
-  it('renders a login button when a user is not logged in', () => {
+  it('display a login button to show user needs to login', () => {
     const loginBtn = screen.getByRole('button', { name: /login/i })
     expect(loginBtn).toBeInTheDocument()
   })
